@@ -7,7 +7,7 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # Variables d'installation dans le répertoire de l'utilisateur
-USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
+USER_HOME="/home/$(logname)"
 GHIDRA_INSTALL_DIR="$USER_HOME/.ghidra"
 OPENJDK_INSTALL_DIR="$GUIDRA_INSTALL_DIR/openjdk-17"
 
