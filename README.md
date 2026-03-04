@@ -1,34 +1,50 @@
-# Ghidra_install
+# Ghidra Install
 
-This repository contains a script for installing Ghidra, a software reverse engineering (SRE) framework developed by the National Security Agency (NSA), along with OpenJDK 17 on Linux systems.
+Script d'installation automatique de **Ghidra** (framework de rétro-ingénierie de la NSA) et **OpenJDK 17** sur Linux.
 
-## Description
+## Fonctionnalités
 
-The script automates the process of downloading and installing Ghidra and OpenJDK 17. It also sets up the environment by adding the necessary paths to the user's `.zshrc` file for easy execution of Ghidra from the command line.
+- Récupère automatiquement la **dernière version** de Ghidra et OpenJDK 17 (Temurin)
+- Installe dans `~/.ghidra/` (répertoire utilisateur)
+- Configure le PATH (`.zshrc` ou `.bashrc`)
+- Crée un lanceur d'application (`.desktop`)
+- Permissions sécurisées (755/750, pas de 777)
 
-## Prerequisites
+## Prérequis
 
-- A Linux-based operating system.
-- `wget` utility installed for downloading files.
-- `unzip` and `tar` utilities for extracting downloaded archives.
-- Root or sudo privileges for executing the script.
+- Linux (Debian, Ubuntu, Arch, etc.)
+- Paquets nécessaires : `wget`, `unzip`, `tar`, `curl`, `jq`
+- Droits root/sudo
+
+### Installation des dépendances (Debian/Ubuntu)
+
+```bash
+sudo apt install wget unzip tar curl jq
+```
 
 ## Installation
 
-1. Download the installation script from this repository.
-2. Open a terminal and navigate to the directory where you downloaded the script.
-3. Make the script executable:
-   ```bash
-   chmod +x ghidra_install.sh
-   ```
+```bash
+git clone https://github.com/ardcord/Ghidra_install.git
+cd Ghidra_install
+chmod +x Ghidra_Install.sh
+sudo ./Ghidra_Install.sh
+```
 
-4. Execute the script with root privileges:
-    ```bash
-    sudo ./ghidra_install.sh
-    ```
-   
-Important Notes
+## Arborescence après installation
 
-    The script must be run with root privileges to ensure proper installation.
-    It automatically downloads Ghidra and OpenJDK 17, installs them in the user's home directory, and configures the environment.
-    Paths to Ghidra and OpenJDK binaries are added to the .zshrc file. If you are using a different shell, you may need to add the paths to the appropriate configuration file for your shell.
+```
+~/.ghidra/
+├── ghidra_<version>_PUBLIC/
+│   ├── ghidraRun          # Lanceur Ghidra
+│   └── ghidra.ico         # Icône
+└── openjdk-17/
+    └── bin/               # Binaires Java
+```
+
+## Notes importantes
+
+- Le script détecte automatiquement la dernière release via l'API GitHub (Ghidra) et l'API Adoptium (OpenJDK)
+- Au premier lancement, Ghidra peut demander le chemin vers OpenJDK. Indiquez : `~/.ghidra/openjdk-17`
+- Si vous utilisez **bash** au lieu de **zsh**, le script ajoutera le PATH dans `.bashrc` automatiquement
+- Les paths sont ajoutés une seule fois (pas de doublons)
